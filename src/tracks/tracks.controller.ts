@@ -9,6 +9,8 @@ import {
 } from '@nestjs/common';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { JwtAuth } from 'src/auth/jwt-auth.guard';
+import { Roles } from 'src/auth/roles-auth.decorator';
+import { RolesGuard } from 'src/auth/roles.guard';
 import { CreateTrackDto } from './dto/create-track-dto';
 import { TracksService } from './tracks.service';
 
@@ -16,6 +18,8 @@ import { TracksService } from './tracks.service';
 export class TracksController {
   constructor(private tracksService: TracksService) {}
 
+  @Roles('ADMIN')
+  @UseGuards(RolesGuard)
   @Post('/add')
   @UseInterceptors(
     FileFieldsInterceptor([

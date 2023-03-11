@@ -30,7 +30,11 @@ export class TracksService {
   }
 
   async getTracks() {
-    const tracks = await this.trackRepository.findAll();
+    const tracks = await this.trackRepository.findAll({
+      include: {
+        all: true,
+      },
+    });
 
     return tracks;
   }

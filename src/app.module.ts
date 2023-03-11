@@ -11,6 +11,7 @@ import { Track } from './tracks/tracks.model';
 import { TrackModule } from './tracks/tracks.module';
 import { Artist } from './artist/artist.model';
 import { ArtistModule } from './artist/artist.module';
+import { UserTrack } from './tracks/user-tracks.model';
 
 @Module({
   controllers: [],
@@ -26,7 +27,7 @@ import { ArtistModule } from './artist/artist.module';
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      models: [User, Role, UserRole, Track, Artist],
+      models: [User, Role, UserRole, Track, Artist, UserTrack],
       autoLoadModels: true,
     }),
     UsersModule,

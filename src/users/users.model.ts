@@ -7,6 +7,8 @@ import {
 } from 'sequelize-typescript';
 import { Role } from 'src/roles/roles.model';
 import { UserRole } from 'src/roles/user-roles.model';
+import { Track } from 'src/tracks/tracks.model';
+import { UserTrack } from 'src/tracks/user-tracks.model';
 
 interface UserCreationAttribute {
   email: string;
@@ -50,4 +52,7 @@ export class User extends Model<User, UserCreationAttribute> {
 
   @BelongsToMany(() => Role, () => UserRole)
   roles: Role[];
+
+  @BelongsToMany(() => Track, () => UserTrack)
+  tracks: Track[];
 }

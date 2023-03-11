@@ -7,12 +7,13 @@ import { FileService } from 'src/file/file.service';
 import { TracksController } from './tracks.controller';
 import { Track } from './tracks.model';
 import { TracksService } from './tracks.service';
+import { UserTrack } from './user-tracks.model';
 
 @Module({
   controllers: [TracksController],
   providers: [TracksService, FileService],
   imports: [
-    SequelizeModule.forFeature([Artist, Track]),
+    SequelizeModule.forFeature([Artist, Track, UserTrack]),
     ArtistModule,
     forwardRef(() => AuthModule),
   ],
