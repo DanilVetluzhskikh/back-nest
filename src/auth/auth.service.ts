@@ -28,7 +28,7 @@ export class AuthService {
 
     if (candidate) {
       throw new HttpException(
-        'User with this email already exists',
+        'Пользователь с таким email уже существует',
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -57,7 +57,7 @@ export class AuthService {
     );
 
     if (!isPasswordEquals || !currentUser) {
-      throw new UnauthorizedException('Invalid login or password');
+      throw new UnauthorizedException('Неверный логин или пароль');
     }
 
     return currentUser;

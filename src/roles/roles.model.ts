@@ -5,7 +5,6 @@ import {
   Model,
   Table,
 } from 'sequelize-typescript';
-import { ApiProperty } from '@nestjs/swagger';
 import { User } from 'src/users/users.model';
 import { UserRole } from './user-roles.model';
 
@@ -16,7 +15,6 @@ interface RoleCreationAttribute {
 
 @Table({ tableName: 'roles' })
 export class Role extends Model<Role, RoleCreationAttribute> {
-  @ApiProperty({ example: '1', description: 'Uniq identifier' })
   @Column({
     type: DataType.INTEGER,
     unique: true,
@@ -25,7 +23,6 @@ export class Role extends Model<Role, RoleCreationAttribute> {
   })
   id: number;
 
-  @ApiProperty({ example: 'ADMIN', description: 'Name of role' })
   @Column({
     type: DataType.STRING,
     unique: true,
@@ -33,10 +30,6 @@ export class Role extends Model<Role, RoleCreationAttribute> {
   })
   value: string;
 
-  @ApiProperty({
-    example: 'Role admin for ...',
-    description: 'Description of role',
-  })
   @Column({
     type: DataType.STRING,
     allowNull: false,

@@ -4,6 +4,7 @@ import { RolesService } from 'src/roles/roles.service';
 import { BanUserDto } from './dto/ban-user-dto';
 import { CreateUserDto } from './dto/create-user-dto';
 import { GiveRoleDto } from './dto/give-role-dto';
+import { ToggleTrackDto } from './dto/toggle-track-dto';
 import { UnbanUserDto } from './dto/unban-user-dto';
 import { User } from './users.model';
 
@@ -86,5 +87,27 @@ export class UsersService {
     }
 
     throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+  }
+
+  async addTrack(toggleDto: ToggleTrackDto) {
+    const { trackId, email } = toggleDto;
+
+    const user = await this.getUserByLogin(email);
+
+    if (trackId && user) {
+      await user.$add('track', trackId);
+      return user;
+    }
+  }
+
+  async removeTrack(toggleDto: ToggleTrackDto) {
+    const { trackId, email } = toggleDto;
+
+    const user = await this.getUserByLogin(email);
+
+    if (trackId && user) {
+      await user.$remove('track', trackId);
+      return user;
+    }
   }
 }
