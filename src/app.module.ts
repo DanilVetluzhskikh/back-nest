@@ -7,8 +7,10 @@ import { RolesModule } from './roles/roles.module';
 import { Role } from './roles/roles.model';
 import { UserRole } from './roles/user-roles.model';
 import { AuthModule } from './auth/auth.module';
-import { File } from './files/files.model';
-import { FileModule } from './files/files.module';
+import { Track } from './tracks/tracks.model';
+import { TrackModule } from './tracks/tracks.module';
+import { Artist } from './artist/artist.model';
+import { ArtistModule } from './artist/artist.module';
 
 @Module({
   controllers: [],
@@ -24,13 +26,14 @@ import { FileModule } from './files/files.module';
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      models: [User, Role, UserRole, File],
+      models: [User, Role, UserRole, Track, Artist],
       autoLoadModels: true,
     }),
     UsersModule,
     RolesModule,
     AuthModule,
-    FileModule,
+    TrackModule,
+    ArtistModule,
   ],
 })
 export class AppModule {}

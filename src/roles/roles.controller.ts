@@ -15,7 +15,7 @@ export class RolesController {
   @ApiResponse({ status: 200, type: Role })
   @Roles('ADMIN')
   @UseGuards(RolesGuard)
-  @Post('/create')
+  @Post('create')
   create(@Body() roleDto: CreateRoleDto) {
     return this.rolesService.createRole(roleDto);
   }

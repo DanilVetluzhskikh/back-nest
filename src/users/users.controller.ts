@@ -18,14 +18,14 @@ export class UsersController {
   @ApiResponse({ status: 200, type: User })
   @Roles('ADMIN')
   @UseGuards(RolesGuard)
-  @Post('/create')
+  @Post('create')
   create(@Body() userDto: CreateUserDto) {
     return this.usersService.createUser(userDto);
   }
 
   @ApiOperation({ summary: 'Get all users' })
   @ApiResponse({ status: 200, type: Array<User> })
-  @Roles('USER')
+  @Roles('ADMIN')
   @UseGuards(RolesGuard)
   @Get('get-all')
   getAll() {
@@ -34,7 +34,7 @@ export class UsersController {
 
   @ApiOperation({ summary: 'Give role for user' })
   @ApiResponse({ status: 200, type: User })
-  @Roles('ADMIN')
+  @Roles('USER')
   @UseGuards(RolesGuard)
   @Post('give-role')
   giveRole(@Body() giveRole: GiveRoleDto) {
