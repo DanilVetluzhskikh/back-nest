@@ -16,6 +16,7 @@ async function start() {
   const documentation = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('/api/docs', app, documentation);
   app.useGlobalPipes(new ValidationPipe());
+  app.enableCors();
 
   await app.listen(PORT, () => console.log(`Server started on ${PORT} port`));
 }

@@ -20,7 +20,12 @@ export class AuthService {
   async login(user: CreateUserDto) {
     const currentUser = await this.validateUser(user);
 
-    return this.generateToken(currentUser);
+    const token = await this.generateToken(currentUser);
+
+    return {
+      token,
+      roles: currentUser.roles.map((item) => item.value),
+    };
   }
 
   async registration(user: CreateUserDto) {
@@ -39,7 +44,12 @@ export class AuthService {
       password: hashPassword,
     });
 
-    return this.generateToken(newUser);
+    const token = await this.generateToken(newUser);
+
+    return {
+      token,
+      roles: newUser.roles.map((item) => item.value),
+    };
   }
 
   private async generateToken(user: User) {
@@ -55,6 +65,12 @@ export class AuthService {
       user.password,
       currentUser?.password || '',
     );
+
+    if (currentUser.banned) {
+      throw new UnauthorizedException(
+        `Пользователь забанен по причине: ${currentUser.banReason}`,
+      );
+    }
 
     if (!isPasswordEquals || !currentUser) {
       throw new UnauthorizedException('Неверный логин или пароль');
