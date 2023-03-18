@@ -12,6 +12,8 @@ import { TrackModule } from './tracks/tracks.module';
 import { Artist } from './artist/artist.model';
 import { ArtistModule } from './artist/artist.module';
 import { UserTrack } from './tracks/user-tracks.model';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import * as path from 'path';
 
 @Module({
   controllers: [],
@@ -30,6 +32,7 @@ import { UserTrack } from './tracks/user-tracks.model';
       models: [User, Role, UserRole, Track, Artist, UserTrack],
       autoLoadModels: true,
     }),
+    ServeStaticModule.forRoot({ rootPath: path.resolve(__dirname, 'static') }),
     UsersModule,
     RolesModule,
     AuthModule,
