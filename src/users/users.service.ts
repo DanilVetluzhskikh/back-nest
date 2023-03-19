@@ -49,11 +49,31 @@ export class UsersService {
 
   async giveRole(giveRole: GiveRoleDto) {
     const user = await this.getUserByLogin(giveRole.email);
-    const role = await this.rolesService.getRoleByValue(giveRole.role);
+    const roles = await user?.$get('roles');
+    const newRoles = [];
 
-    if (role && user) {
-      await user.$add('role', role.id);
-      return user;
+    for (const currentRole of roles) {
+      const role = await this.rolesService.getRoleByValue(currentRole.value);
+
+      if (role && user) {
+        await user.$remove('role', role.id);
+      }
+    }
+
+    for (const currentRole of giveRole.roles) {
+      const role = await this.rolesService.getRoleByValue(currentRole);
+
+      if (role && user) {
+        newRoles.push(role);
+        await user.$add('role', role.id);
+      }
+    }
+
+    if (user) {
+      return {
+        roles: newRoles,
+        email: user.email,
+      };
     }
 
     throw new HttpException('User or role not found', HttpStatus.NOT_FOUND);
