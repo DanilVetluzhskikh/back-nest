@@ -20,13 +20,17 @@ export class TracksService {
     const audioPath = this.fileService.createFile(FileType.AUDIO, audio);
     const imagePath = this.fileService.createFile(FileType.IMAGE, picture);
 
-    return await this.trackRepository.create({
+    const track = await this.trackRepository.create({
       name,
       artistId: Number(artistId),
       audioPath,
       imagePath,
       listens: 0,
     });
+
+    const tracks = await this.getTracks();
+
+    return tracks.find((item) => item.id === track.id);
   }
 
   async getTracks() {
