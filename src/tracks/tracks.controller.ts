@@ -11,6 +11,7 @@ import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { JwtAuth } from 'src/auth/jwt-auth.guard';
 import { Roles } from 'src/auth/roles-auth.decorator';
 import { RolesGuard } from 'src/auth/roles.guard';
+import { AddListenDto } from './dto/add-listen-dto';
 import { CreateTrackDto } from './dto/create-track-dto';
 import { TracksService } from './tracks.service';
 
@@ -37,5 +38,11 @@ export class TracksController {
   @Get('get')
   getTracks() {
     return this.tracksService.getTracks();
+  }
+
+  @UseGuards(JwtAuth)
+  @Post('add-listen')
+  addLister(@Body() dto: AddListenDto) {
+    return this.tracksService.addListen(dto);
   }
 }

@@ -6,6 +6,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as uuuid from 'uuid';
 import { FileService, FileType } from 'src/file/file.service';
+import { AddListenDto } from './dto/add-listen-dto';
 
 @Injectable()
 export class TracksService {
@@ -41,6 +42,27 @@ export class TracksService {
     });
 
     return tracks;
+  }
+
+  async addListen(dto: AddListenDto) {
+    const currentTrack = await this.trackRepository.findOne({
+      where: {
+        id: dto.id,
+      },
+    });
+
+    if (currentTrack) {
+      currentTrack.listens = currentTrack.listens + 1;
+
+      currentTrack.save();
+
+      return currentTrack;
+    }
+
+    throw new HttpException(
+      'Error with write track',
+      HttpStatus.INTERNAL_SERVER_ERROR,
+    );
   }
 
   async createTrack(track): Promise<string> {
